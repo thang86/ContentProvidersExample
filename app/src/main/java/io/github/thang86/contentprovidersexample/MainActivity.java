@@ -147,9 +147,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void delete() {
+        String countryName = etWhereToDelete.getText().toString();
+        String selection = NationEntry.COLUMN_COUNTRY+" =?";
+        String []selectionArg = {countryName};
+
+        int rowsDeleted=database.delete(NationEntry.TABLE_NAME,selection,selectionArg);
+
+        Log.i(TAG, "Number of rows deleted: " + rowsDeleted);
     }
 
     private void update() {
+        String contryName = etWhereToUpdate.getText().toString();
+        String newContinent = etNewContinent.getText().toString();
+
+        String selection = NationEntry.COLUMN_COUNTRY+" =?";
+        String []selectionArg= {contryName};
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NationEntry.COLUMN_CONTINENT, newContinent);
+        int rowId = database.update(NationEntry.TABLE_NAME,contentValues,selection,selectionArg);
+        Log.i(TAG, "Number of rows updated: " + rowId);
     }
 
     private void insert() {
